@@ -1,0 +1,61 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion versions.compileSdk
+    buildToolsVersion versions.androidBuildTool
+
+    defaultConfig {
+        applicationId "pl.dziczyzna"
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.targerSdk
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    // Kotlin
+    implementation depends.kotlin.stdlib
+
+    // UI
+    kapt depends.androidX.lifecycleCompiler
+    implementation depends.material
+    implementation depends.androidX.appcompat
+    implementation depends.androidX.constraintLayout
+    implementation depends.androidX.lifecycleViewModel
+    implementation depends.androidX.lifecycleLiveData
+    implementation depends.androidX.coreKtx
+
+    // Network
+    implementation depends.retrofit.retrofit
+    implementation depends.retrofit.adapterRx
+    implementation depends.retrofit.converterGson
+    implementation depends.okhttp.logging
+    implementation depends.gson
+
+    // RX
+    implementation depends.rxJava2.rxJava
+    implementation depends.rxJava2.rxAndroid
+
+    // DI
+    implementation depends.koin.scope
+    implementation depends.koin.viewModel
+}
