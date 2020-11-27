@@ -1,0 +1,63 @@
+ext {
+
+    versions = [
+            compileSdk      : 30,
+            minSdk          : 21,
+            targerSdk       : 30,
+            gradleBuildTool : "4.1.0",
+            androidBuildTool: "30.0.0",
+            kotlin          : "1.4.10",
+            androidX        : [
+                    appcompat       : "1.2.0",
+                    constraintlayout: "2.0.4",
+                    lifecycle       : "2.2.0",
+                    coreKtx         : "1.3.2"
+            ],
+            material        : "1.2.1",
+            rxJava2         : [
+                    rxJava   : "2.2.19",
+                    rxAndroid: "2.1.1"
+            ],
+            retrofit        : "2.6.2",
+            okhttp          : [
+                    logging: "4.4.1"
+            ],
+            koin            : [
+                    scope    : "2.1.5",
+                    viewModel: "2.1.5"
+            ],
+            gson            : "2.8.0",
+    ]
+    depends = [
+            kotlin  : [
+                    stdlib: "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin"
+            ],
+            androidX: [
+                    appcompat         : "androidx.appcompat:appcompat:$versions.androidX.appcompat",
+                    constraintLayout  : "androidx.constraintlayout:constraintlayout:$versions.androidX.constraintlayout",
+                    lifecycleViewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidX.lifecycle",
+                    lifecycleLiveData : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidX.lifecycle",
+                    lifecycleCompiler : "androidx.lifecycle:lifecycle-compiler:$versions.androidX.lifecycle",
+                    coreKtx           : "androidx.core:core-ktx:$versions.androidX.coreKtx"
+
+            ],
+            material: "com.google.android.material:material:$versions.material",
+            rxJava2 : [
+                    rxAndroid: "io.reactivex.rxjava2:rxjava:$versions.rxJava2.rxJava",
+                    rxJava   : "io.reactivex.rxjava2:rxandroid:$versions.rxJava2.rxAndroid"
+            ],
+            retrofit: [
+                    retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
+                    adapterRx    : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
+                    converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
+            ],
+            okhttp  : [
+                    logging: "com.squareup.okhttp3:logging-interceptor:$versions.okhttp.logging"
+            ],
+            koin    : [
+                    scope    : "org.koin:koin-androidx-scope:$versions.koin.scope",
+                    viewModel: "org.koin:koin-androidx-viewmodel:$versions.koin.viewModel"
+            ],
+            gson    : "com.google.code.gson:gson:$versions.gson"
+    ]
+}
