@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Dziczyzna</string>
+
+    <!-- LOGIN -->
+    <string name="login_nick">Podaj swój nick</string>
+    <string name="login_continue">Dalej</string>
+    <string name="login_error">Wpisany nick jest już zajęty</string>
+
+    <string name="io_error">Wystąpił problem z połączeniem sieciowym, spróbuj ponownie.</string>
+
 </resources>

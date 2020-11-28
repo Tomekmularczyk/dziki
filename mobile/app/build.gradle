@@ -2,11 +2,16 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 android {
     compileSdkVersion versions.compileSdk
     buildToolsVersion versions.androidBuildTool
+
+    buildFeatures {
+        viewBinding true
+    }
 
     defaultConfig {
         applicationId "pl.dziczyzna"
@@ -43,6 +48,10 @@ dependencies {
     implementation depends.androidX.lifecycleViewModel
     implementation depends.androidX.lifecycleLiveData
     implementation depends.androidX.coreKtx
+
+    // Firebase
+    implementation platform(depends.firebase.bom)
+    implementation depends.firebase.database
 
     // Network
     implementation depends.retrofit.retrofit
