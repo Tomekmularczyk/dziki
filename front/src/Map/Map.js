@@ -49,12 +49,7 @@ export function Map({ reports }) {
               {reports
                 .filter((m) => m.type === "ALIVE")
                 .map((report, i) => (
-                  <Marker
-                    type={report.type}
-                    latitude={report.latitude}
-                    longitude={report.longitude}
-                    key={i}
-                  />
+                  <Marker report={report} key={i} />
                 ))}
             </FeatureGroup>
           </LayersControl.Overlay>
@@ -63,12 +58,7 @@ export function Map({ reports }) {
               {reports
                 .filter((m) => m.type === "DEAD")
                 .map((report, i) => (
-                  <Marker
-                    type={report.type}
-                    latitude={report.latitude}
-                    longitude={report.longitude}
-                    key={i}
-                  />
+                  <Marker report={report} key={i} />
                 ))}
             </FeatureGroup>
           </LayersControl.Overlay>
