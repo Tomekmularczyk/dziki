@@ -5,6 +5,14 @@
   box-sizing: border-box;
 }
 
+* {
+  font-family: Inter;
+}
+
+body {
+  background-color: #fcfcfc;
+}
+
 /* Remove default padding */
 ul[class],
 ol[class] {
