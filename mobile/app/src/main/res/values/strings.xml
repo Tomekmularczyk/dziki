@@ -6,6 +6,19 @@
     <string name="login_continue">Dalej</string>
     <string name="login_error">Wpisany nick jest już zajęty</string>
 
+    <!-- COMMON -->
     <string name="io_error">Wystąpił problem z połączeniem sieciowym, spróbuj ponownie.</string>
+
+    <!-- REPORT -->
+    <string name="pig_type">Rodzaj zwierzyny</string>
+    <string name="is_alive_pig">Żywy</string>
+    <string name="is_death_pig">Padły/truchło</string>
+    <string name="localization">Lokacja</string>
+    <string name="time">Czas</string>
+    <string name="photo">Zdjęcie</string>
+    <string name="add_photo">Dodaj zdjęcie</string>
+    <string name="send_report">Wyślij zgłoszenie</string>
+
+
 
 </resources>

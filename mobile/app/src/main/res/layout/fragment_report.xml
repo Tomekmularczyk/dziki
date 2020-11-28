@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/default_margin_double"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:id="@+id/textPigLocationHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_double"
+                android:text="@string/localization"
+                app:layout_constraintTop_toBottomOf="@+id/layoutDeathPig"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:id="@+id/textPigLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                app:layout_constraintTop_toBottomOf="@+id/textPigLocationHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="Wielkoposlkie" />
+
+            <View
+                style="@style/Divider"
+                android:layout_marginVertical="@dimen/default_margin_double" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:id="@+id/textPigTimeHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/time"
+                app:layout_constraintTop_toBottomOf="@+id/textPigLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:id="@+id/textPigTime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                app:layout_constraintTop_toBottomOf="@+id/textPigTimeHeader"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:text="12:00" />
+
+            <View
+                style="@style/Divider"
+                android:layout_marginVertical="@dimen/default_margin_double" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/pig_type"
+                app:layout_constraintTop_toBottomOf="@+id/textPigLocation"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/radioGroupPigCount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radioAlivePig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/is_alive_pig" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/radioDeathPig"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/default_margin"
+                    android:layout_gravity="center"
+                    android:text="@string/is_death_pig" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/radioGroupPigCount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@+id/layoutPigCount"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <LinearLayout
+                    android:id="@+id/layoutSinglePig"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_margin"
+                    android:background="@drawable/rounded_background">
+
+                    <ImageView
+                        android:layout_width="@dimen/pig_icon_size"
+                        android:layout_height="@dimen/pig_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_single"
+                        android:duplicateParentState="true"
+                        app:tint="?colorAccent" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radioSinglePig"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_half"
+                        android:layout_gravity="center"
+                        android:duplicateParentState="true" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/default_margin_double"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/layoutMotherPig"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="@dimen/default_margin"
+                    android:background="@drawable/rounded_background">
+
+                    <ImageView
+                        android:layout_width="@dimen/pig_icon_size"
+                        android:layout_height="@dimen/pig_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_mother"
+                        android:duplicateParentState="true"
+                        app:tint="?colorAccent" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radioMotherPig"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_half"
+                        android:layout_gravity="center"
+                        android:duplicateParentState="true" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="@dimen/default_margin_double"
+                    android:layout_height="wrap_content"/>
+
+                <LinearLayout
+                    android:id="@+id/layoutHerdPig"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:background="@drawable/rounded_background">
+
+                    <ImageView
+                        android:layout_width="@dimen/pig_icon_size"
+                        android:layout_height="@dimen/pig_icon_size"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_herd"
+                        android:duplicateParentState="true"
+                        app:tint="?colorAccent" />
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/radioHerdPig"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/default_margin_half"
+                        android:layout_gravity="center"
+                        android:duplicateParentState="true" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <FrameLayout
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/rounded_background"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintDimensionRatio="H,2:1">
+
+                    <Button
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/add_photo" />
+
+                </FrameLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <Button
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/default_margin_double"
+        android:layout_marginEnd="@dimen/default_margin_double"
+        android:text="@string/send_report" />
+
+</LinearLayout>
