@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import { Map } from "./Map/Map";
+import { useList } from "react-firebase-hooks/database";
+import { database } from "./firebase";
+import { NavBar } from "./NavBar/NavBar";
 
 function App() {
+  const [snapshots, loading, error] = useList(database.ref("reports"));
+
+  const reports = snapshots.map((s) => s.val());
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NavBar />
+      <Map reports={reports} />
     </div>
   );
 }
