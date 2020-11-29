@@ -55,13 +55,6 @@ dependencies {
     implementation depends.firebase.database
     implementation depends.firebase.storage
 
-    // Network
-    implementation depends.retrofit.retrofit
-    implementation depends.retrofit.adapterRx
-    implementation depends.retrofit.converterGson
-    implementation depends.okhttp.logging
-    implementation depends.gson
-
     // RX
     implementation depends.rxJava2.rxJava
     implementation depends.rxJava2.rxAndroid

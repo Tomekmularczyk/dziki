@@ -23,15 +23,10 @@ ext {
                     rxJava   : "2.2.19",
                     rxAndroid: "2.1.1"
             ],
-            retrofit        : "2.6.2",
-            okhttp          : [
-                    logging: "4.4.1"
-            ],
             koin            : [
                     scope    : "2.1.5",
                     viewModel: "2.1.5"
-            ],
-            gson            : "2.8.0",
+            ]
     ]
     depends = [
             kotlin  : [
@@ -57,18 +52,9 @@ ext {
                     rxAndroid: "io.reactivex.rxjava2:rxjava:$versions.rxJava2.rxJava",
                     rxJava   : "io.reactivex.rxjava2:rxandroid:$versions.rxJava2.rxAndroid"
             ],
-            retrofit: [
-                    retrofit     : "com.squareup.retrofit2:retrofit:$versions.retrofit",
-                    adapterRx    : "com.squareup.retrofit2:adapter-rxjava2:$versions.retrofit",
-                    converterGson: "com.squareup.retrofit2:converter-gson:$versions.retrofit"
-            ],
-            okhttp  : [
-                    logging: "com.squareup.okhttp3:logging-interceptor:$versions.okhttp.logging"
-            ],
             koin    : [
                     scope    : "org.koin:koin-androidx-scope:$versions.koin.scope",
                     viewModel: "org.koin:koin-androidx-viewmodel:$versions.koin.viewModel"
-            ],
-            gson    : "com.google.code.gson:gson:$versions.gson"
+            ]
     ]
 }

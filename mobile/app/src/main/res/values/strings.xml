@@ -3,7 +3,9 @@
 
     <!-- LOGIN -->
     <string name="login_nick">Podaj swój nick</string>
-    <string name="login_continue">Dalej</string>
+    <string name="login_continue">Zaloguj</string>
+    <string name="login_title_part_one">Namierz</string>
+    <string name="login_title_part_two">Dzika</string>
     <string name="login_error">Wpisany nick jest już zajęty</string>
 
     <!-- COMMON -->

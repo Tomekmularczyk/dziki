@@ -1,5 +1,6 @@
 package pl.dziczyzna.login.presentation
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,6 +51,8 @@ internal class LoginFragment : Fragment(R.layout.fragment_login) {
         binding.buttonContinue.isEnabled = false
         binding.inputLogin.error = null
         get<UserPreferences>().saveUserLogin(login)
+        requireActivity().setResult(Activity.RESULT_OK)
+        requireActivity().finish()
     }
 
     private fun CreateUserUi.InProgress.render() {

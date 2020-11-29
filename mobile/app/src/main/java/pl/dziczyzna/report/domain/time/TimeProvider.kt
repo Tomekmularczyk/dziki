@@ -6,7 +6,7 @@ import java.util.Locale
 
 internal class TimeProvider {
 
-    private val timeFormat = SimpleDateFormat("HH.mm", Locale.getDefault())
+    private val timeFormat = SimpleDateFormat("HH:mm", Locale.getDefault())
     private val dateFormat = SimpleDateFormat("dd/MMMM/yyyy", Locale.getDefault())
 
     fun getCurrentDate(): String {

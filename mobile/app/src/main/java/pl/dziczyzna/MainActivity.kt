@@ -24,16 +24,15 @@ internal class MainActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         when {
-            requestCode == LOGIN_ACTIVITY_RESULT && resultCode == RESULT_CANCELED -> init()
+            requestCode == LOGIN_ACTIVITY_RESULT && resultCode == RESULT_CANCELED -> finish()
             requestCode == LOGIN_ACTIVITY_RESULT && resultCode == RESULT_OK       -> startOnboarding()
-
         }
     }
 
     private fun init() {
         val userPreferences = UserPreferences(this)
 
-        if (!userPreferences.getUserLogin().isNullOrBlank()) {
+        if (userPreferences.getUserLogin().isNullOrBlank()) {
             startActivityForResult(LoginActivity.newIntent(this), LOGIN_ACTIVITY_RESULT)
         }
     }

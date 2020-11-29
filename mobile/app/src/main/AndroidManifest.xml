@@ -27,7 +27,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".login.presentation.LoginActivity" />
+        <activity
+            android:name=".login.presentation.LoginActivity"
+            android:windowSoftInputMode="adjustPan" />
 
         <activity android:name=".confirmation.ConfirmationActivity" />
 

@@ -6,14 +6,41 @@
     android:layout_height="match_parent"
     android:padding="@dimen/default_margin_double">
 
+    <TextView
+        android:layout_marginTop="128dp"
+        style="@style/TextAppearance.MaterialComponents.Headline4"
+        android:id="@+id/textLoginTitleOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/login_title_part_one"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/textLoginTitleTwo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintVertical_chainStyle="packed"/>
+
+    <TextView
+        style="@style/TextAppearance.MaterialComponents.Headline4"
+        android:id="@+id/textLoginTitleTwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="64dp"
+        android:textColor="?colorAccent"
+        android:text="@string/login_title_part_two"
+        app:layout_constraintTop_toBottomOf="@+id/textLoginTitleOne"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
     <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="64dp"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:id="@+id/inputLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/login_nick"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/buttonContinue"
+        app:layout_constraintTop_toBottomOf="@+id/textLoginTitleTwo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintVertical_chainStyle="packed">
@@ -25,7 +52,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        style="@style/Widget.MaterialComponents.Button"
         android:id="@+id/buttonContinue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -33,7 +60,6 @@
         android:enabled="false"
         android:text="@string/login_continue"
         app:layout_constraintTop_toBottomOf="@+id/inputLogin"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 
