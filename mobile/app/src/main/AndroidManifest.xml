@@ -33,6 +33,8 @@
 
         <activity android:name=".onboarding.OnboardingActivity" />
 
+        <activity android:name=".report.ReportActivity" />
+
     </application>
 
 </manifest>

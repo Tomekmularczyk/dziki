@@ -8,48 +8,44 @@ import android.graphics.Typeface
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import pl.dziczyzna.R
 import pl.dziczyzna.confirmation.ConfirmationActivity
-import pl.dziczyzna.databinding.FragmentReportBinding
+import pl.dziczyzna.databinding.ActivityReportBinding
 import pl.dziczyzna.login.presentation.model.PhotoUploadUi
 import pl.dziczyzna.report.domain.model.PigCount
 import pl.dziczyzna.report.domain.model.PigType
 import pl.dziczyzna.report.presentation.ReportViewMode
 import pl.dziczyzna.report.presentation.model.SendReportStateUi
 
-internal class ReportFragment : Fragment() {
+internal class ReportActivity : AppCompatActivity() {
 
     private val viewModel: ReportViewMode by viewModel(parameters = {
         parametersOf(
-            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager,
-            requireActivity().contentResolver
+            getSystemService(LOCATION_SERVICE) as LocationManager,
+            contentResolver
         )
     })
-    private lateinit var binding: FragmentReportBinding
+    private lateinit var binding: ActivityReportBinding
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        binding = FragmentReportBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+        binding = ActivityReportBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
 
         setupUi()
 
@@ -75,6 +71,7 @@ internal class ReportFragment : Fragment() {
     }
 
     private fun setupUi() {
+        binding.toolbar.setNavigationOnClickListener { finish() }
         binding.buttonAddPhoto.setOnClickListener { viewModel.capturePhoto() }
         binding.buttonSend.setOnClickListener { viewModel.sendReport() }
     }
@@ -106,9 +103,9 @@ internal class ReportFragment : Fragment() {
     }
 
     private fun observeGrantLocationPermissionEvent() {
-        viewModel.grantLocationPermissionEvent().observe(viewLifecycleOwner) {
+        viewModel.grantLocationPermissionEvent().observe(this) {
             ActivityCompat.requestPermissions(
-                requireActivity(),
+                this,
                 arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION),
                 REQUEST_PERMISSIONS_REQUEST_CODE
             )
@@ -116,7 +113,7 @@ internal class ReportFragment : Fragment() {
     }
 
     private fun observeCaptureImageEvent() {
-        viewModel.captureImageEvent().observe(viewLifecycleOwner) { imageFile ->
+        viewModel.captureImageEvent().observe(this) { imageFile ->
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFile)
             startActivityForResult(intent, REQUEST_CAMERA_CODE)
@@ -124,7 +121,7 @@ internal class ReportFragment : Fragment() {
     }
 
     private fun observePhotoUploadResult() {
-        viewModel.photoUploadResult().observe(viewLifecycleOwner) { result ->
+        viewModel.photoUploadResult().observe(this) { result ->
             when (result) {
                 is PhotoUploadUi.Success -> {
                     binding.progressUpload.visibility = View.GONE
@@ -145,19 +142,20 @@ internal class ReportFragment : Fragment() {
     }
 
     private fun observeSendReport() {
-        viewModel.sendReportResult().observe(viewLifecycleOwner) { result ->
+        viewModel.sendReportResult().observe(this) { result ->
             when (result) {
                 SendReportStateUi.InProgress -> {
-                    SendingReportDialog.newInstance().show(childFragmentManager, SendingReportDialog.FRAGMENT_TAG)
+                    SendingReportDialog.newInstance().show(supportFragmentManager, SendingReportDialog.FRAGMENT_TAG)
                     binding.buttonSend.isEnabled = false
                 }
                 is SendReportStateUi.Success -> {
-                    (childFragmentManager.findFragmentByTag(SendingReportDialog.FRAGMENT_TAG) as? SendingReportDialog)?.dismiss()
+                    (supportFragmentManager.findFragmentByTag(SendingReportDialog.FRAGMENT_TAG) as? SendingReportDialog)?.dismiss()
                     binding.buttonSend.isEnabled = false
-                    startActivity(ConfirmationActivity.newInstance(requireContext(), result.city))
+                    startActivity(ConfirmationActivity.newInstance(this, result.city))
+                    finish()
                 }
                 is SendReportStateUi.Error -> {
-                    (childFragmentManager.findFragmentByTag(SendingReportDialog.FRAGMENT_TAG) as? SendingReportDialog)?.dismiss()
+                    (supportFragmentManager.findFragmentByTag(SendingReportDialog.FRAGMENT_TAG) as? SendingReportDialog)?.dismiss()
                     binding.buttonSend.isEnabled = true
                     showSnackbar(getString(R.string.sent_report_failed), getString(R.string.try_again)) {
                         viewModel.sendReport()
@@ -168,7 +166,7 @@ internal class ReportFragment : Fragment() {
     }
 
     private fun observeReport() {
-        viewModel.reportViewState().observe(viewLifecycleOwner) { uiState ->
+        viewModel.reportViewState().observe(this) { uiState ->
             resetRadioListeners()
             binding.textPigLocation.text = uiState.city + "\n" + uiState.state
             binding.textPigTime.text = uiState.time + "\n" + uiState.date
@@ -211,11 +209,11 @@ internal class ReportFragment : Fragment() {
     }
 
     private fun setPigImageTint(imageView: ImageView, isSelected: Boolean, @DrawableRes resource: Int) {
-        val unwrappedDrawable = AppCompatResources.getDrawable(requireContext(), resource)
+        val unwrappedDrawable = AppCompatResources.getDrawable(this, resource)
         val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!).mutate()
 
         if (isSelected && imageView.isEnabled) {
-            DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), R.color.color_primary))
+            DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(this, R.color.color_primary))
         }
 
         imageView.setImageDrawable(wrappedDrawable)
@@ -226,7 +224,7 @@ internal class ReportFragment : Fragment() {
         textView.setTypeface(null, Typeface.BOLD);
 
         if (isSelected && textView.isEnabled) {
-            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_primary))
+            textView.setTextColor(ContextCompat.getColor(this, R.color.color_primary))
         }
     }
 
@@ -243,5 +241,9 @@ internal class ReportFragment : Fragment() {
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 123
         private const val REQUEST_CAMERA_CODE = 124
+
+        fun newInstance(context: Context): Intent {
+            return Intent(context, ReportActivity::class.java)
+        }
     }
 }

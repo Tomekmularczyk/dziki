@@ -10,6 +10,10 @@
     <string name="io_error">Wystąpił problem z połączeniem sieciowym, spróbuj ponownie.</string>
     <string name="try_again">Spróbuj ponownie</string>
 
+    <!-- ONBOARDING -->
+    <string name="main_title">Dodaj zgłoszenie.</string>
+    <string name="main_subtitle">To łatwe, wypełnij parę pól, a my zajmniemy się resztą.</string>
+
     <!-- REPORT -->
     <string name="new_report">Nowe zgłoszenie</string>
     <string name="pig_type">Rodzaj zwierzyny</string>
