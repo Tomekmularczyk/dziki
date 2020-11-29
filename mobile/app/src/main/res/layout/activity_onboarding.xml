@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPagerOnboarding"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <pl.dziczyzna.onboarding.StepLayout
+        android:id="@+id/stepLayoutOnboarding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/default_margin_double"
+        android:paddingStart="@dimen/default_margin_double"
+        android:paddingEnd="@dimen/default_margin_double" />
+
+    <Button
+        style="@style/Widget.MaterialComponents.Button"
+        android:id="@+id/buttonOnboardingNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/default_margin_double"
+        android:text="@string/next" />
+
+</LinearLayout>

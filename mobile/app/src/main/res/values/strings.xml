@@ -38,4 +38,17 @@
     <string name="more">Po więcej informacji zapraszamy na:</string>
     <string name="more_www">dzikjestdziki.gov.pl</string>
 
+
+    <!-- ONBOARDING -->
+    <string name="next">Dalej</string>
+    <string name="start">Zaczynamy</string>
+    <string name="onboarding_one_title">Widzisz dziki w okolicy?</string>
+    <string name="onboarding_two_title">Dzik jest dziki, dzik jest zły!</string>
+    <string name="onboarding_three_title">Monitoruj sytuację.</string>
+    <string name="onboarding_one_subtitle">Czy po Twojej okolicy nocą hasa za dużo dzików? Nasza aplikacja im pomoże!</string>
+    <string name="onboarding_two_subtitle">Te zdrowe są fajne. Ale wiele z nich ma chorobę ASF, która zagraża hodowli
+        trzody chlewnej.</string>
+    <string name="onboarding_three_subtitle">Przedstawiamy Ci dane, które pokażą zbliżające się zagrożenia ASF.</string>
+
+
 </resources>

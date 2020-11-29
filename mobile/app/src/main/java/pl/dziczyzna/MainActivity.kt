@@ -2,11 +2,7 @@ package pl.dziczyzna
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import org.koin.android.ext.android.get
-import pl.dziczyzna.login.domain.preferences.UserPreferences
-import pl.dziczyzna.login.presentation.LoginActivity
-import pl.dziczyzna.login.presentation.LoginFragment
-import pl.dziczyzna.report.ReportFragment
+import pl.dziczyzna.onboarding.OnboardingActivity
 
 internal class MainActivity : AppCompatActivity() {
 
@@ -21,8 +17,10 @@ internal class MainActivity : AppCompatActivity() {
             }
         }*/
 
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragmentContainer, ReportFragment()).commit()
+        /*supportFragmentManager.beginTransaction()
+            .add(R.id.fragmentContainer, ReportFragment()).commit()*/
+
+        startActivity(OnboardingActivity.newInstance(this))
     }
 
     companion object {

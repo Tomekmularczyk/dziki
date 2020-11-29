@@ -31,6 +31,8 @@
 
         <activity android:name=".confirmation.ConfirmationActivity" />
 
+        <activity android:name=".onboarding.OnboardingActivity" />
+
     </application>
 
 </manifest>
