@@ -18,7 +18,7 @@ ext {
             firebase        : [
                     "bom": "26.1.0"
             ],
-            material        : "1.2.1",
+            material        : "1.3.0-alpha04",
             rxJava2         : [
                     rxJava   : "2.2.19",
                     rxAndroid: "2.1.1"
@@ -49,7 +49,8 @@ ext {
             ],
             firebase: [
                     bom     : "com.google.firebase:firebase-bom:$versions.firebase.bom",
-                    database: "com.google.firebase:firebase-database"
+                    database: "com.google.firebase:firebase-database",
+                    storage : "com.google.firebase:firebase-storage"
             ],
             material: "com.google.android.material:material:$versions.material",
             rxJava2 : [

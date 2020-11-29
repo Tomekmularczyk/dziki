@@ -18,11 +18,14 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import pl.dziczyzna.R
 import pl.dziczyzna.databinding.FragmentReportBinding
+import pl.dziczyzna.login.presentation.model.PhotoUploadUi
 import pl.dziczyzna.report.domain.model.PigCount
 import pl.dziczyzna.report.domain.model.PigType
 import pl.dziczyzna.report.presentation.ReportViewMode
@@ -49,6 +52,7 @@ internal class ReportFragment : Fragment() {
 
         observeGrantLocationPermissionEvent()
         observeCaptureImageEvent()
+        observePhotoUploadResult()
         observeReport()
 
         viewModel.fetchUserLocation()
@@ -114,6 +118,27 @@ internal class ReportFragment : Fragment() {
         }
     }
 
+    private fun observePhotoUploadResult() {
+        viewModel.photoUploadResult().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                is PhotoUploadUi.Success -> {
+                    binding.progressUpload.visibility = View.GONE
+                    showSnackbar(getString(R.string.sent_photo_success), null, null)
+                }
+                is PhotoUploadUi.Progress -> {
+                    binding.progressUpload.setProgressCompat(result.progress, true)
+                    binding.progressUpload.visibility = View.VISIBLE
+                }
+                is PhotoUploadUi.Error -> {
+                    binding.progressUpload.visibility = View.GONE
+                    showSnackbar(getString(R.string.sent_photo_failed), getString(R.string.try_again)) {
+                        viewModel.tryAgainUploadImage()
+                    }
+                }
+            }
+        }
+    }
+
     private fun observeReport() {
         viewModel.reportViewState().observe(viewLifecycleOwner) { uiState ->
             resetRadioListeners()
@@ -151,6 +176,7 @@ internal class ReportFragment : Fragment() {
             setPigTestStyle(binding.textPigHerd, uiState.count == PigCount.HERD)
 
             binding.imageThumb.setImageBitmap(uiState.image)
+            binding.buttonAddPhoto.isVisible = uiState.image == null
 
             setRadioListeners()
         }
@@ -173,6 +199,16 @@ internal class ReportFragment : Fragment() {
 
         if (isSelected && textView.isEnabled) {
             textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_primary))
+        }
+    }
+
+    private fun showSnackbar(title: String, actionText: String?, action: (() -> Unit)?) {
+        Snackbar.make(binding.root, title, Snackbar.LENGTH_LONG).apply {
+            if (actionText != null && action != null) {
+                setAction(actionText) { action() }
+            }
+
+            show()
         }
     }
 

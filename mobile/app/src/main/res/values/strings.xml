@@ -8,6 +8,7 @@
 
     <!-- COMMON -->
     <string name="io_error">Wystąpił problem z połączeniem sieciowym, spróbuj ponownie.</string>
+    <string name="try_again">Spróbuj ponownie</string>
 
     <!-- REPORT -->
     <string name="pig_type">Rodzaj zwierzyny</string>
@@ -21,6 +22,7 @@
     <string name="pig_single">Samotny Knur</string>
     <string name="pig_many">Locha i młode</string>
     <string name="pig_herd">Stado</string>
-
+    <string name="sent_photo_success">Zdjęcie zostało wysłane</string>
+    <string name="sent_photo_failed">Wysyłanie zdjęcia nie powiodło się.</string>
 
 </resources>

@@ -15,6 +15,7 @@ import pl.dziczyzna.login.presentation.UserViewModel
 import pl.dziczyzna.login.presentation.mapper.CreateUserErrorMapper
 import pl.dziczyzna.report.domain.location.UserLocationProvider
 import pl.dziczyzna.report.domain.photo.PhotoCapture
+import pl.dziczyzna.report.domain.photo.PhotoUpload
 import pl.dziczyzna.report.domain.time.TimeProvider
 import pl.dziczyzna.report.presentation.ReportViewMode
 
@@ -36,6 +37,7 @@ internal object ApplicationKoinModule {
                 locationPermissionCheck = LocationPermissionCheck(androidContext()),
                 userLocationProvider = UserLocationProvider(androidContext(), locationManager),
                 photoCapture = PhotoCapture(contentResolver),
+                photoUpload = PhotoUpload(),
                 schedulers = get()
             )
         }

@@ -53,6 +53,7 @@ dependencies {
     // Firebase
     implementation platform(depends.firebase.bom)
     implementation depends.firebase.database
+    implementation depends.firebase.storage
 
     // Network
     implementation depends.retrofit.retrofit
