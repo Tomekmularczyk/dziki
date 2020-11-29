@@ -1,10 +1,12 @@
+import { format } from "date-fns";
+import L from "leaflet";
+import * as React from "react";
 import { Marker as LMarker, Popup } from "react-leaflet";
+import styled, { createGlobalStyle } from "styled-components";
+import { ReactComponent as ArrowCircleIcon } from "./arrow-circle.svg";
 import alivePigIcon from "./marker-alive.svg";
 import deadPigIcon from "./marker-dead.svg";
-import L from "leaflet";
-import styled, { createGlobalStyle } from "styled-components";
-import { format } from "date-fns";
-import { ReactComponent as ArrowCircleIcon } from "./arrow-circle.svg";
+import { StatusBadge } from "./StatusBadge";
 
 const MARKER_CLASS = "custom-leaflet-icon";
 
@@ -95,26 +97,36 @@ const CountToText = {
   HERD: "Stado dzików",
 };
 
-export function Marker({ report }) {
-  const { latitude, longitude, type, photoUrl, count, timestamp } = report;
+export function Marker({ report, onReportClick }) {
+  const {
+    latitude,
+    longitude,
+    type,
+    photoUrl,
+    count,
+    timestamp,
+    status,
+  } = report;
 
   const date = new Date(timestamp);
 
   return (
     <>
       <Styles />
+
       <LMarker
         position={[latitude, longitude]}
         icon={type === "ALIVE" ? aliveIcon : deadIcon}
       >
         <StyledPopup>
           <ContentImage src={photoUrl} />
+          {type === "DEAD" && <StatusBadge status={status} />}
           <Content>
             <Type>{TypeToText[type]}</Type>
             <Count>{CountToText[count]}</Count>
             <DateText>{format(date, "HH:mm dd.MM.yyyy")}</DateText>
           </Content>
-          <StyledIcon />
+          <StyledIcon onClick={onReportClick} />
         </StyledPopup>
       </LMarker>
     </>

@@ -8,12 +8,12 @@ import stats from "./stats.png";
 const Nav = styled.nav`
   display: flex;
   width: 100%;
-  padding: 2rem 2rem;
+  padding: 1rem 2rem 2rem 2rem;
 `;
 
 const RegionDropdown = styled.img.attrs({ src: regionDropdown })`
   margin-top: 1rem;
-  width: 250px;
+  width: 200px;
 `;
 
 const Hamburger = styled.img.attrs({ src: hamburger })`
@@ -24,20 +24,20 @@ const Hamburger = styled.img.attrs({ src: hamburger })`
 `;
 
 const DownloadRaportButton = styled.img.attrs({ src: downloadRaport })`
-  width: 200px;
+  width: 400px;
   margin-top: 1rem;
   cursor: pointer;
 `;
 
 const StatsChange = styled.img.attrs({ src: statsChange })`
-  width: 570px;
+  width: 470px;
   margin-top: 1rem;
   cursor: pointer;
 `;
 
 const Stats = styled.img.attrs({ src: stats })`
-  width: 310px;
-  height: 160px;
+  width: 250px;
+  height: 128px;
   margin-top: 16px;
   margin-right: 90px;
   cursor: pointer;
@@ -65,7 +65,9 @@ export function NavBar() {
           Monitoring ASF
         </H2>
         <RegionDropdown />
-        <DownloadRaportButton />
+        <a href="/raport-przypadkow.xlsx" download>
+          <DownloadRaportButton />
+        </a>
       </div>
       <Container>
         <Stats />

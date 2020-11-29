@@ -8,6 +8,7 @@ import {
 import styled from "styled-components";
 import HeatmapLayer from "react-leaflet-heatmap-layer";
 import { Marker } from "./Marker";
+import { Modal } from "./Modal";
 
 const StyledMap = styled(LMap)`
   width: 100%;
@@ -22,6 +23,8 @@ const Container = styled.div`
 const sulejowek = [52.25221, 21.26902];
 
 export function Map({ reports }) {
+  const [isModalVisible, setIsModalVisible] = React.useState(false);
+
   return (
     <Container>
       <StyledMap center={sulejowek} zoom={13} scrollWheelZoom>
@@ -32,7 +35,7 @@ export function Map({ reports }) {
               attribution="&copy; <a href=http://osm.org/copyright>OpenStreetMap</a> contributors"
             />
           </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer name="Kartograficzna">
+          <LayersControl.BaseLayer name="Administracyjna">
             <TileLayer
               url="https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png"
               attribution="&copy; <a href=http://osm.org/copyright>OpenStreetMap</a> contributors"
@@ -49,7 +52,11 @@ export function Map({ reports }) {
               {reports
                 .filter((m) => m.type === "ALIVE")
                 .map((report, i) => (
-                  <Marker report={report} key={i} />
+                  <Marker
+                    report={report}
+                    key={i}
+                    onReportClick={() => setIsModalVisible(true)}
+                  />
                 ))}
             </FeatureGroup>
           </LayersControl.Overlay>
@@ -58,24 +65,26 @@ export function Map({ reports }) {
               {reports
                 .filter((m) => m.type === "DEAD")
                 .map((report, i) => (
-                  <Marker report={report} key={i} />
+                  <Marker
+                    report={report}
+                    key={i}
+                    onReportClick={() => setIsModalVisible(true)}
+                  />
                 ))}
             </FeatureGroup>
           </LayersControl.Overlay>
-          <LayersControl.Overlay name="Zagęszczenie">
+          <LayersControl.Overlay name="Mapa termiczna">
             <FeatureGroup color="purple">
               <HeatmapLayer
-                gradient={{
-                  0.4: "#FEE92A",
-                  0.8: "#E47A17",
-                  1.0: "#C00000",
-                }}
+                // gradient={{
+                //   0.4: "#FEE92A",
+                //   0.8: "#E47A17",
+                //   1.0: "#C00000",
+                // }}
                 fitBoundsOnLoad
                 fitBoundsOnUpdate
                 minOpacity={0.6}
                 points={[...reports]}
-                radius={40}
-                blur={10}
                 longitudeExtractor={(m) => m.longitude}
                 latitudeExtractor={(m) => m.latitude}
                 intensityExtractor={(m) => {
@@ -99,6 +108,10 @@ export function Map({ reports }) {
           </LayersControl.Overlay>
         </LayersControl>
       </StyledMap>
+      <Modal
+        isVisible={isModalVisible}
+        onClose={() => setIsModalVisible(false)}
+      />
     </Container>
   );
 }
