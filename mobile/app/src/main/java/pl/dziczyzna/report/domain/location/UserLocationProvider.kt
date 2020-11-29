@@ -23,7 +23,7 @@ internal class UserLocationProvider(private val context: Context, private val lo
                     val addresses = Geocoder(context).getFromLocation(location.latitude, location.longitude, 1)
                     val city: String = addresses.firstOrNull()?.locality.orEmpty()
                     val state: String = addresses.firstOrNull()?.adminArea.orEmpty()
-                    emitter.onSuccess(UserLocation(city, state))
+                    emitter.onSuccess(UserLocation(city, state, location.latitude, location.longitude))
                 } catch (exception: IOException) {
                     emitter.onError(exception)
                 }

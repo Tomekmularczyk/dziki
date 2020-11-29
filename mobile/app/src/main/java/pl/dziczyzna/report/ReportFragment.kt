@@ -8,6 +8,7 @@ import android.graphics.Typeface
 import android.location.LocationManager
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -29,6 +30,7 @@ import pl.dziczyzna.login.presentation.model.PhotoUploadUi
 import pl.dziczyzna.report.domain.model.PigCount
 import pl.dziczyzna.report.domain.model.PigType
 import pl.dziczyzna.report.presentation.ReportViewMode
+import pl.dziczyzna.report.presentation.model.SendReportStateUi
 
 internal class ReportFragment : Fragment() {
 
@@ -54,6 +56,7 @@ internal class ReportFragment : Fragment() {
         observeCaptureImageEvent()
         observePhotoUploadResult()
         observeReport()
+        observeSendReport()
 
         viewModel.fetchUserLocation()
     }
@@ -72,6 +75,7 @@ internal class ReportFragment : Fragment() {
 
     private fun setupUi() {
         binding.buttonAddPhoto.setOnClickListener { viewModel.capturePhoto() }
+        binding.buttonSend.setOnClickListener { viewModel.sendReport() }
     }
 
     private fun resetRadioListeners() {
@@ -133,6 +137,25 @@ internal class ReportFragment : Fragment() {
                     binding.progressUpload.visibility = View.GONE
                     showSnackbar(getString(R.string.sent_photo_failed), getString(R.string.try_again)) {
                         viewModel.tryAgainUploadImage()
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeSendReport() {
+        viewModel.sendReportResult().observe(viewLifecycleOwner) { result ->
+            when (result) {
+                SendReportStateUi.InProgress -> {
+                    binding.buttonSend.isEnabled = false
+                }
+                SendReportStateUi.Success -> {
+                    binding.buttonSend.isEnabled = false
+                }
+                is SendReportStateUi.Error -> {
+                    binding.buttonSend.isEnabled = true
+                    showSnackbar(getString(R.string.sent_report_failed), getString(R.string.try_again)) {
+                        viewModel.sendReport()
                     }
                 }
             }

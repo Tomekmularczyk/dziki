@@ -16,8 +16,10 @@ import pl.dziczyzna.report.domain.model.PigCount
 import pl.dziczyzna.report.domain.model.PigType
 import pl.dziczyzna.report.domain.photo.PhotoCapture
 import pl.dziczyzna.report.domain.photo.PhotoUpload
+import pl.dziczyzna.report.domain.report.SendReport
 import pl.dziczyzna.report.domain.time.TimeProvider
 import pl.dziczyzna.report.presentation.model.ReportStateUi
+import pl.dziczyzna.report.presentation.model.SendReportStateUi
 import pl.dziczyzna.report.presentation.model.UserLocationUi
 
 internal class ReportViewMode(
@@ -26,6 +28,7 @@ internal class ReportViewMode(
     private val userLocationProvider: UserLocationProvider,
     private val photoCapture: PhotoCapture,
     private val photoUpload: PhotoUpload,
+    private val sendReport: SendReport,
     private val schedulers: RxSchedulers
 ) : ViewModel() {
 
@@ -34,6 +37,7 @@ internal class ReportViewMode(
         MutableLiveData(ReportStateUi(time = timeProvider.getCurrentTime(), date = timeProvider.getCurrentDate()))
     private val userLocationResult = MutableLiveData<UserLocationUi>()
     private val photoUploadResult = MutableLiveData<PhotoUploadUi>()
+    private val sendReportResult = MutableLiveData<SendReportStateUi>()
     private val grantLocationPermissionEvent = SingleLiveData<Unit>()
     private val captureImageEvent = SingleLiveData<Uri>()
 
@@ -49,12 +53,12 @@ internal class ReportViewMode(
         return captureImageEvent
     }
 
-    fun userLocationResult(): LiveData<UserLocationUi> {
-        return userLocationResult
-    }
-
     fun photoUploadResult(): LiveData<PhotoUploadUi> {
         return photoUploadResult
+    }
+
+    fun sendReportResult(): LiveData<SendReportStateUi> {
+        return sendReportResult
     }
 
     fun capturePhoto() {
@@ -89,13 +93,28 @@ internal class ReportViewMode(
         executeUploadPhoto(getCurrentReport().image!!)
     }
 
+    fun sendReport() {
+        val result = sendReportResult.value
+
+        if (result == null || result is SendReportStateUi.Error) {
+            executeSendReport()
+        }
+    }
+
     private fun executeGetUserLocation() {
         userLocationProvider.getUserLocation()
             .subscribeOn(schedulers.io())
             .observeOn(schedulers.android())
             .doOnSubscribe { pushUserLocationResult(UserLocationUi.InProgress) }
             .subscribe({ userLocation ->
-                pushReportState(getCurrentReport().copy(city = userLocation.city, state = userLocation.state))
+                pushReportState(
+                    getCurrentReport().copy(
+                        city = userLocation.city,
+                        state = userLocation.state,
+                        longitude = userLocation.longitude,
+                        latitude = userLocation.latitude
+                    )
+                )
                 pushUserLocationResult(UserLocationUi.Success)
             }, { throwable ->
                 pushUserLocationResult(UserLocationUi.Error(throwable))
@@ -140,6 +159,20 @@ internal class ReportViewMode(
             }
     }
 
+    private fun executeSendReport() {
+        sendReport.sendReport(getCurrentReport())
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.android())
+            .doOnSubscribe { pushSendReportResult(SendReportStateUi.InProgress) }
+            .subscribe({
+                pushSendReportResult(SendReportStateUi.Success)
+            }, { throwable ->
+                pushSendReportResult(SendReportStateUi.Error(throwable))
+            }).also {
+                disposables.add(it)
+            }
+    }
+
     private fun pushReportState(result: ReportStateUi) {
         reportViewState.value = result
     }
@@ -150,6 +183,10 @@ internal class ReportViewMode(
 
     private fun pushPhotoUploadResult(result: PhotoUploadUi) {
         photoUploadResult.value = result
+    }
+
+    private fun pushSendReportResult(result: SendReportStateUi) {
+        sendReportResult.value = result
     }
 
     private fun getCurrentReport(): ReportStateUi {

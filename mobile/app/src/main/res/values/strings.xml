@@ -24,5 +24,6 @@
     <string name="pig_herd">Stado</string>
     <string name="sent_photo_success">Zdjęcie zostało wysłane</string>
     <string name="sent_photo_failed">Wysyłanie zdjęcia nie powiodło się.</string>
+    <string name="sent_report_failed">Wysyłanie zgłoszenia nie powiodło się.</string>
 
 </resources>

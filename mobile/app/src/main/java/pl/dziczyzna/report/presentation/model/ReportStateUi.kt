@@ -7,6 +7,8 @@ import pl.dziczyzna.report.domain.model.PigCount
 internal data class ReportStateUi(
     val city: String = "",
     val state: String = "",
+    val latitude: Double? = null,
+    val longitude: Double? = null,
     val time: String,
     val date: String,
     val type: PigType = PigType.ALIVE,
