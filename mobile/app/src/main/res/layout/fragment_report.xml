@@ -14,11 +14,12 @@
         app:liftOnScroll="true">
 
         <com.google.android.material.appbar.MaterialToolbar
+            style="@style/Widget.MaterialComponents.Toolbar.Primary"
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            app:title="@string/new_report"
-            app:navigationIcon="@drawable/ic_baseline_close_24"/>
+            app:navigationIcon="@drawable/ic_baseline_close_24"
+            app:title="@string/new_report" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
