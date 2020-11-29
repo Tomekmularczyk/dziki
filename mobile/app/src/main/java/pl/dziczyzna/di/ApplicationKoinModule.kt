@@ -1,5 +1,6 @@
 package pl.dziczyzna.di
 
+import android.content.ContentResolver
 import android.location.LocationManager
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -13,6 +14,7 @@ import pl.dziczyzna.login.domain.repository.UserRepository
 import pl.dziczyzna.login.presentation.UserViewModel
 import pl.dziczyzna.login.presentation.mapper.CreateUserErrorMapper
 import pl.dziczyzna.report.domain.location.UserLocationProvider
+import pl.dziczyzna.report.domain.photo.PhotoCapture
 import pl.dziczyzna.report.domain.time.TimeProvider
 import pl.dziczyzna.report.presentation.ReportViewMode
 
@@ -28,11 +30,12 @@ internal object ApplicationKoinModule {
             )
         }
 
-        viewModel { (locationManager: LocationManager) ->
+        viewModel { (locationManager: LocationManager, contentResolver: ContentResolver) ->
             ReportViewMode(
                 timeProvider = TimeProvider(),
                 locationPermissionCheck = LocationPermissionCheck(androidContext()),
                 userLocationProvider = UserLocationProvider(androidContext(), locationManager),
+                photoCapture = PhotoCapture(contentResolver),
                 schedulers = get()
             )
         }

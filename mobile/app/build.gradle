@@ -48,6 +48,7 @@ dependencies {
     implementation depends.androidX.lifecycleViewModel
     implementation depends.androidX.lifecycleLiveData
     implementation depends.androidX.coreKtx
+    implementation depends.androidX.exifinterface
 
     // Firebase
     implementation platform(depends.firebase.bom)

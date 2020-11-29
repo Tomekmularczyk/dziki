@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="divider">#DBDBDB</color>
+    <color name="disable_icon">#9E9E9E</color>
 </resources>

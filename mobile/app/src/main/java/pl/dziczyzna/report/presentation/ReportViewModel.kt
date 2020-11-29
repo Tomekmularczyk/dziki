@@ -1,5 +1,8 @@
 package pl.dziczyzna.report.presentation
 
+import android.graphics.Bitmap
+import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +13,7 @@ import pl.dziczyzna.common.SingleLiveData
 import pl.dziczyzna.report.domain.location.UserLocationProvider
 import pl.dziczyzna.report.domain.model.PigCount
 import pl.dziczyzna.report.domain.model.PigType
+import pl.dziczyzna.report.domain.photo.PhotoCapture
 import pl.dziczyzna.report.domain.time.TimeProvider
 import pl.dziczyzna.report.presentation.model.ReportStateUi
 import pl.dziczyzna.report.presentation.model.UserLocationUi
@@ -18,6 +22,7 @@ internal class ReportViewMode(
     timeProvider: TimeProvider,
     private val locationPermissionCheck: LocationPermissionCheck,
     private val userLocationProvider: UserLocationProvider,
+    private val photoCapture: PhotoCapture,
     private val schedulers: RxSchedulers
 ) : ViewModel() {
 
@@ -27,6 +32,7 @@ internal class ReportViewMode(
         MutableLiveData(ReportStateUi(time = timeProvider.getCurrentTime(), date = timeProvider.getCurrentDate()))
     private val userLocationResult = MutableLiveData<UserLocationUi>()
     private val grantLocationPermissionEvent = SingleLiveData<Unit>()
+    private val captureImageEvent = SingleLiveData<Uri>()
 
     fun reportViewState(): LiveData<ReportStateUi> {
         return reportViewState
@@ -36,8 +42,29 @@ internal class ReportViewMode(
         return grantLocationPermissionEvent
     }
 
+    fun captureImageEvent(): LiveData<Uri> {
+        return captureImageEvent
+    }
+
     fun userLocationResult(): LiveData<UserLocationUi> {
         return userLocationResult
+    }
+
+    fun capturePhoto() {
+        captureImageEvent.value = photoCapture.imageUri
+    }
+
+    fun loadPhoto() {
+        photoCapture.createBitmap()
+            .subscribeOn(schedulers.io())
+            .observeOn(schedulers.android())
+            .subscribe({ image ->
+                pushReportState(getCurrentReport().copy(image = image))
+            }, {
+                // nop
+            }).also {
+                disposables.add(it)
+            }
     }
 
     fun fetchUserLocation() {
@@ -58,6 +85,10 @@ internal class ReportViewMode(
 
     fun setPigCount(count: PigCount) {
         pushReportState(getCurrentReport().copy(count = count))
+    }
+
+    fun setImage(image: Bitmap) {
+        pushReportState(getCurrentReport().copy(image = image))
     }
 
     private fun executeGetUserLocation() {

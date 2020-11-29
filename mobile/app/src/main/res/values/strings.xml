@@ -18,7 +18,9 @@
     <string name="photo">Zdjęcie</string>
     <string name="add_photo">Dodaj zdjęcie</string>
     <string name="send_report">Wyślij zgłoszenie</string>
-
+    <string name="pig_single">Samotny Knur</string>
+    <string name="pig_many">Locha i młode</string>
+    <string name="pig_herd">Stado</string>
 
 
 </resources>

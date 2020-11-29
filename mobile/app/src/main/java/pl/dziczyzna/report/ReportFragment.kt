@@ -1,17 +1,27 @@
 package pl.dziczyzna.report
 
 import android.Manifest
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Typeface
 import android.location.LocationManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.annotation.DrawableRes
+import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.fragment.app.Fragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
+import pl.dziczyzna.R
 import pl.dziczyzna.databinding.FragmentReportBinding
 import pl.dziczyzna.report.domain.model.PigCount
 import pl.dziczyzna.report.domain.model.PigType
@@ -20,7 +30,10 @@ import pl.dziczyzna.report.presentation.ReportViewMode
 internal class ReportFragment : Fragment() {
 
     private val viewModel: ReportViewMode by viewModel(parameters = {
-        parametersOf(requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager)
+        parametersOf(
+            requireActivity().getSystemService(Context.LOCATION_SERVICE) as LocationManager,
+            requireActivity().contentResolver
+        )
     })
     private lateinit var binding: FragmentReportBinding
 
@@ -32,7 +45,10 @@ internal class ReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupUi()
+
         observeGrantLocationPermissionEvent()
+        observeCaptureImageEvent()
         observeReport()
 
         viewModel.fetchUserLocation()
@@ -44,6 +60,14 @@ internal class ReportFragment : Fragment() {
         if (requestCode == REQUEST_PERMISSIONS_REQUEST_CODE) {
             viewModel.fetchUserLocation()
         }
+
+        if (requestCode == REQUEST_CAMERA_CODE && resultCode == Activity.RESULT_OK) {
+            viewModel.loadPhoto()
+        }
+    }
+
+    private fun setupUi() {
+        binding.buttonAddPhoto.setOnClickListener { viewModel.capturePhoto() }
     }
 
     private fun resetRadioListeners() {
@@ -82,6 +106,14 @@ internal class ReportFragment : Fragment() {
         }
     }
 
+    private fun observeCaptureImageEvent() {
+        viewModel.captureImageEvent().observe(viewLifecycleOwner) { imageFile ->
+            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFile)
+            startActivityForResult(intent, REQUEST_CAMERA_CODE)
+        }
+    }
+
     private fun observeReport() {
         viewModel.reportViewState().observe(viewLifecycleOwner) { uiState ->
             resetRadioListeners()
@@ -92,17 +124,60 @@ internal class ReportFragment : Fragment() {
             binding.radioSinglePig.isChecked = uiState.count == PigCount.SINGLE
             binding.radioMotherPig.isChecked = uiState.count == PigCount.MANY
             binding.radioHerdPig.isChecked = uiState.count == PigCount.HERD
+
             binding.layoutSinglePig.isEnabled = uiState.type == PigType.ALIVE
             binding.layoutMotherPig.isEnabled = uiState.type == PigType.ALIVE
             binding.layoutHerdPig.isEnabled = uiState.type == PigType.ALIVE
-            binding.radioSinglePig.isClickable = uiState.type == PigType.ALIVE
-            binding.radioMotherPig.isClickable = uiState.type == PigType.ALIVE
-            binding.radioHerdPig.isClickable = uiState.type == PigType.ALIVE
+            binding.imagePigSingle.isEnabled = uiState.type == PigType.ALIVE
+            binding.imagePigMany.isEnabled = uiState.type == PigType.ALIVE
+            binding.imagePigHerd.isEnabled = uiState.type == PigType.ALIVE
+            binding.textPigSingle.isEnabled = uiState.type == PigType.ALIVE
+            binding.textPigMany.isEnabled = uiState.type == PigType.ALIVE
+            binding.textPigHerd.isEnabled = uiState.type == PigType.ALIVE
+            binding.radioSinglePig.isEnabled = uiState.type == PigType.ALIVE
+            binding.radioMotherPig.isEnabled = uiState.type == PigType.ALIVE
+            binding.radioHerdPig.isEnabled = uiState.type == PigType.ALIVE
+
+            binding.layoutSinglePig.isSelected = uiState.count == PigCount.SINGLE
+            binding.layoutMotherPig.isSelected = uiState.count == PigCount.MANY
+            binding.layoutHerdPig.isSelected = uiState.count == PigCount.HERD
+
+            setPigImageTint(binding.imagePigSingle, uiState.count == PigCount.SINGLE, R.drawable.ic_single)
+            setPigImageTint(binding.imagePigMany, uiState.count == PigCount.MANY, R.drawable.ic_many)
+            setPigImageTint(binding.imagePigHerd, uiState.count == PigCount.HERD, R.drawable.ic_herd)
+
+            setPigTestStyle(binding.textPigSingle, uiState.count == PigCount.SINGLE)
+            setPigTestStyle(binding.textPigMany, uiState.count == PigCount.MANY)
+            setPigTestStyle(binding.textPigHerd, uiState.count == PigCount.HERD)
+
+            binding.imageThumb.setImageBitmap(uiState.image)
+
             setRadioListeners()
+        }
+    }
+
+    private fun setPigImageTint(imageView: ImageView, isSelected: Boolean, @DrawableRes resource: Int) {
+        val unwrappedDrawable = AppCompatResources.getDrawable(requireContext(), resource)
+        val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!).mutate()
+
+        if (isSelected && imageView.isEnabled) {
+            DrawableCompat.setTint(wrappedDrawable, ContextCompat.getColor(requireContext(), R.color.color_primary))
+        }
+
+        imageView.setImageDrawable(wrappedDrawable)
+    }
+
+    private fun setPigTestStyle(textView: TextView, isSelected: Boolean) {
+        textView.setTextAppearance(R.style.TextAppearance_MaterialComponents_Caption)
+        textView.setTypeface(null, Typeface.BOLD);
+
+        if (isSelected && textView.isEnabled) {
+            textView.setTextColor(ContextCompat.getColor(requireContext(), R.color.color_primary))
         }
     }
 
     companion object {
         private const val REQUEST_PERMISSIONS_REQUEST_CODE = 123
+        private const val REQUEST_CAMERA_CODE = 124
     }
 }

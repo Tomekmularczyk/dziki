@@ -2,7 +2,7 @@ ext {
 
     versions = [
             compileSdk      : 30,
-            minSdk          : 21,
+            minSdk          : 23,
             targerSdk       : 30,
             gradleBuildTool : "4.1.0",
             androidBuildTool: "30.0.0",
@@ -11,7 +11,8 @@ ext {
                     appcompat       : "1.2.0",
                     constraintlayout: "2.0.4",
                     lifecycle       : "2.2.0",
-                    coreKtx         : "1.3.2"
+                    coreKtx         : "1.3.2",
+                    exifinterface   : "1.2.0"
             ],
             gms             : "4.3.4",
             firebase        : [
@@ -42,7 +43,8 @@ ext {
                     lifecycleViewModel: "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.androidX.lifecycle",
                     lifecycleLiveData : "androidx.lifecycle:lifecycle-livedata-ktx:$versions.androidX.lifecycle",
                     lifecycleCompiler : "androidx.lifecycle:lifecycle-compiler:$versions.androidX.lifecycle",
-                    coreKtx           : "androidx.core:core-ktx:$versions.androidX.coreKtx"
+                    coreKtx           : "androidx.core:core-ktx:$versions.androidX.coreKtx",
+                    exifinterface     : "androidx.exifinterface:exifinterface:$versions.androidX.exifinterface"
 
             ],
             firebase: [
