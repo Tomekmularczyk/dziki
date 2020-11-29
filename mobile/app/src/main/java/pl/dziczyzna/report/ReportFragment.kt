@@ -25,6 +25,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.parameter.parametersOf
 import pl.dziczyzna.R
+import pl.dziczyzna.confirmation.ConfirmationActivity
 import pl.dziczyzna.databinding.FragmentReportBinding
 import pl.dziczyzna.login.presentation.model.PhotoUploadUi
 import pl.dziczyzna.report.domain.model.PigCount
@@ -147,12 +148,16 @@ internal class ReportFragment : Fragment() {
         viewModel.sendReportResult().observe(viewLifecycleOwner) { result ->
             when (result) {
                 SendReportStateUi.InProgress -> {
+                    SendingReportDialog.newInstance().show(childFragmentManager, SendingReportDialog.FRAGMENT_TAG)
                     binding.buttonSend.isEnabled = false
                 }
-                SendReportStateUi.Success -> {
+                is SendReportStateUi.Success -> {
+                    (childFragmentManager.findFragmentByTag(SendingReportDialog.FRAGMENT_TAG) as? SendingReportDialog)?.dismiss()
                     binding.buttonSend.isEnabled = false
+                    startActivity(ConfirmationActivity.newInstance(requireContext(), result.city))
                 }
                 is SendReportStateUi.Error -> {
+                    (childFragmentManager.findFragmentByTag(SendingReportDialog.FRAGMENT_TAG) as? SendingReportDialog)?.dismiss()
                     binding.buttonSend.isEnabled = true
                     showSnackbar(getString(R.string.sent_report_failed), getString(R.string.try_again)) {
                         viewModel.sendReport()

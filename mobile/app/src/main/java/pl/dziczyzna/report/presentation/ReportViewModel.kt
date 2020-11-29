@@ -165,7 +165,7 @@ internal class ReportViewMode(
             .observeOn(schedulers.android())
             .doOnSubscribe { pushSendReportResult(SendReportStateUi.InProgress) }
             .subscribe({
-                pushSendReportResult(SendReportStateUi.Success)
+                pushSendReportResult(SendReportStateUi.Success(getCurrentReport().city))
             }, { throwable ->
                 pushSendReportResult(SendReportStateUi.Error(throwable))
             }).also {

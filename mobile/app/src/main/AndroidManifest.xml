@@ -29,6 +29,8 @@
 
         <activity android:name=".login.presentation.LoginActivity" />
 
+        <activity android:name=".confirmation.ConfirmationActivity" />
+
     </application>
 
 </manifest>

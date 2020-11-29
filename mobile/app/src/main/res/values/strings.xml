@@ -11,6 +11,7 @@
     <string name="try_again">Spróbuj ponownie</string>
 
     <!-- REPORT -->
+    <string name="new_report">Nowe zgłoszenie</string>
     <string name="pig_type">Rodzaj zwierzyny</string>
     <string name="is_alive_pig">Żywy</string>
     <string name="is_death_pig">Padły/truchło</string>
@@ -25,5 +26,16 @@
     <string name="sent_photo_success">Zdjęcie zostało wysłane</string>
     <string name="sent_photo_failed">Wysyłanie zdjęcia nie powiodło się.</string>
     <string name="sent_report_failed">Wysyłanie zgłoszenia nie powiodło się.</string>
+    <string name="sending_report">Twoje zgłoszenie jest wysyłane.</string>
+
+
+    <!-- CONFIRMATION -->
+    <string name="success">Zgłoszono</string>
+    <string name="thanks">Dziękujemy!</string>
+    <string name="info">To bardzo istotne dla Społeczeństwa informacja w walce z ASF.</string>
+    <string name="gift">i... Nagroda</string>
+    <string name="gift_info">Zostałeś najczęstrzym zgłaszającym w %s i dostajesz miano:</string>
+    <string name="more">Po więcej informacji zapraszamy na:</string>
+    <string name="more_www">dzikjestdziki.gov.pl</string>
 
 </resources>

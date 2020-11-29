@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        app:liftOnScroll="true">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:navigationIcon="@drawable/ic_baseline_close_24"
+            app:title="@string/success" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:id="@+id/fragmentLogin"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:padding="@dimen/default_margin_double"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="54dp"
+                android:layout_height="54dp"
+                android:layout_marginTop="@dimen/default_margin_double_double"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_checkmark"
+                app:tint="?colorAccent" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:gravity="center_horizontal"
+                android:text="@string/thanks" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:layout_marginBottom="@dimen/default_margin_double"
+                android:gravity="center_horizontal"
+                android:text="@string/info" />
+
+            <View
+                style="@style/Divider"
+                android:layout_margin="@dimen/default_margin_double" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Headline6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_double"
+                android:gravity="center_horizontal"
+                android:text="@string/gift" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Body1"
+                android:id="@+id/textGiftInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin"
+                android:gravity="center_horizontal"
+                tools:text="@string/gift_info" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_double"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_hunter" />
+
+            <TextView
+                style="@style/TextAppearance.MaterialComponents.Caption"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/default_margin_double_double"
+                android:gravity="center_horizontal"
+                android:text="@string/more" />
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/more_www" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+
